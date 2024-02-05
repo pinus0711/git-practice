@@ -1,9 +1,6 @@
 package dev.service.newsscrap.entity;
 
-import com.sun.istack.NotNull;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -20,4 +17,12 @@ public class Member {
 
     @Column(nullable = false)
     private String password;
+
+    @Builder
+    public Member(Long id, String name, String password) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+    }
+
 }
