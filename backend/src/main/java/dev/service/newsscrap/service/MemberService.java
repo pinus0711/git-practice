@@ -9,5 +9,5 @@ public interface MemberService {
 
     Optional<Member> findById(Long id);
 
-    Long Login(String name, String password);
+    Long login(String name, String password);
 }

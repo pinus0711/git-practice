@@ -1,6 +1,7 @@
 package dev.service.newsscrap.service;
 
 import dev.service.newsscrap.entity.Member;
+import dev.service.newsscrap.exception.LoginFailedException;
 import dev.service.newsscrap.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,8 +27,13 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Long Login(String name, String password) {
+    public Long login(String name, String password) {
         Optional<Member> loginMember = memberRepository.findByNameAndPassword(name, password);
+
+        if (loginMember.isEmpty()) {
+            throw new LoginFailedException("Invalid value");
+        }
+
         return loginMember.get().getId();
     }
 }
