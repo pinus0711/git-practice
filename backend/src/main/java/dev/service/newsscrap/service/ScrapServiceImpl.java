@@ -1,5 +1,6 @@
 package dev.service.newsscrap.service;
 
+import dev.service.newsscrap.dto.ScrapRequest;
 import dev.service.newsscrap.entity.Scrap;
 import dev.service.newsscrap.repository.ScrapRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class ScrapServiceImpl implements ScrapService {
 
     @Override
     public Scrap save(Scrap scrap) {
+
         return scrapRepository.save(scrap);
     }
 

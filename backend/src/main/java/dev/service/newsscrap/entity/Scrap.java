@@ -2,6 +2,7 @@ package dev.service.newsscrap.entity;
 
 import com.sun.istack.NotNull;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -40,4 +41,16 @@ public class Scrap {
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
+
+    @Builder
+    public Scrap(String url, String title, String content, String comment, String keyword, LocalDateTime createdTime, LocalDateTime updatedTime, Member member) {
+        this.url = url;
+        this.title = title;
+        this.content = content;
+        this.comment = comment;
+        this.keyword = keyword;
+        this.createdTime = createdTime;
+        this.updatedTime = updatedTime;
+        this.member = member;
+    }
 }
