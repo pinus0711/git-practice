@@ -17,24 +17,24 @@ public class Scrap {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+    @Column(nullable = false)
     private String url;
 
-    @NotNull
+    @Column(nullable = false)
     private String title;
 
-    @NotNull
+    @Column(nullable = false)
     private String content;
 
     private String comment;
 
-    @NotNull
+    @Column(nullable = false)
     private String keyword;
 
-    @NotNull
+    @Column(nullable = false)
     private LocalDateTime createdTime;
 
-    @NotNull
+    @Column(nullable = false)
     private LocalDateTime updatedTime;
 
     @ManyToOne
