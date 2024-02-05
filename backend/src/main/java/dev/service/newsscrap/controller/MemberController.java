@@ -29,7 +29,7 @@ public class MemberController {
     @PostMapping("/login")
     public Long Login(@RequestBody MemberRequest memberRequest) {
         Member member = memberRequest.toEntity();
-        return memberService.validLogin(member.getName(), member.getPassword());
+        return memberService.Login(member.getName(), member.getPassword());
     }
 
 }

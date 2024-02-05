@@ -26,7 +26,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Long validLogin(String name, String password) {
+    public Long Login(String name, String password) {
         Optional<Member> loginMember = memberRepository.findByNameAndPassword(name, password);
         return loginMember.get().getId();
     }
