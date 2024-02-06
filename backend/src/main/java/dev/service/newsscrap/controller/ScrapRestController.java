@@ -1,6 +1,6 @@
 package dev.service.newsscrap.controller;
 
-import dev.service.newsscrap.dto.ScrapRequestDTO;
+import dev.service.newsscrap.dto.ScrapRequest;
 import dev.service.newsscrap.dto.ScrapUpdateRequestDTO;
 import dev.service.newsscrap.dto.ScrapUpdateResponseDTO;
 import dev.service.newsscrap.entity.Scrap;
