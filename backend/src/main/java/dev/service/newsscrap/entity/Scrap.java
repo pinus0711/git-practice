@@ -42,7 +42,8 @@ public class Scrap {
     private Member member;
 
     @Builder
-    public Scrap(String url, String title, String content, String comment, String keyword, LocalDateTime createdTime, LocalDateTime updatedTime, Member member) {
+    public Scrap(Long id, String url, String title, String content, String comment, String keyword, LocalDateTime createdTime, LocalDateTime updatedTime, Member member) {
+        this.id = id;
         this.url = url;
         this.title = title;
         this.content = content;

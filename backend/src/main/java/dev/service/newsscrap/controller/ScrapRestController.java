@@ -1,6 +1,6 @@
 package dev.service.newsscrap.controller;
 
-import dev.service.newsscrap.dto.ScrapRequestDTO;
+import dev.service.newsscrap.dto.ScrapRequest;
 import dev.service.newsscrap.service.ScrapService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,9 +16,8 @@ public class ScrapRestController {
     private final ScrapService scrapService;
 
     @PostMapping("/create")
-    public void addScrap(@RequestBody ScrapRequestDTO scrapRequestDTO) {
+    public void addScrap(@RequestBody ScrapRequest scrapRequest) {
 
-        scrapService.save(scrapRequestDTO);
+        scrapService.save(scrapRequest);
     }
-
 }
