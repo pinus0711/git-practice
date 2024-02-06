@@ -2,6 +2,7 @@ package dev.service.newsscrap.controller;
 
 import dev.service.newsscrap.dto.MemberRequest;
 import dev.service.newsscrap.entity.Member;
+import dev.service.newsscrap.exception.DupulicationNameException;
 import dev.service.newsscrap.exception.LoginFailedException;
 import dev.service.newsscrap.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -24,9 +25,16 @@ public class MemberController {
      * 회원가입
      */
     @PostMapping("/register")
-    public Long Register(@RequestBody MemberRequest memberRequest) {
+    public ResponseEntity<?> Register(@RequestBody MemberRequest memberRequest) {
         Member member = memberRequest.toEntity();
-        return memberService.save(member);
+
+        try {
+            Long id = memberService.save(member);
+
+            return ResponseEntity.ok(id);
+        } catch (DupulicationNameException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
     }
 
     /**
@@ -46,7 +54,7 @@ public class MemberController {
             return ResponseEntity.ok(id);
 
         } catch (LoginFailedException e) {
-           return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed: " + e.getMessage());
+           return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
     }
 

@@ -1,6 +1,7 @@
 package dev.service.newsscrap.service;
 
 import dev.service.newsscrap.entity.Member;
+import dev.service.newsscrap.exception.DupulicationNameException;
 import dev.service.newsscrap.exception.LoginFailedException;
 import dev.service.newsscrap.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +17,13 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Long save(Member member) {
-        Member savedMember = memberRepository.save(member);
-        return savedMember.getId();
+
+        if(!validationName(member.getName())) {
+            Member savedMember = memberRepository.save(member);
+            return savedMember.getId();
+        }
+
+        throw new DupulicationNameException("중복된 아이디 입니다.");
     }
 
     @Override
@@ -31,9 +37,21 @@ public class MemberServiceImpl implements MemberService {
         Optional<Member> loginMember = memberRepository.findByNameAndPassword(name, password);
 
         if (loginMember.isEmpty()) {
-            throw new LoginFailedException("Invalid value");
+            throw new LoginFailedException("아이디 또는 비밀번호가 일치하지 않습니다.");
         }
 
         return loginMember.get().getId();
+    }
+
+    /**
+     * 중복이름 예외처리
+     */
+    private boolean validationName(String name) {
+        Optional<Member> findMember = memberRepository.findByName(name);
+
+        if (findMember.isPresent()) {
+            return true;
+        }
+        return false;
     }
 }
