@@ -21,6 +21,7 @@ public class ScrapServiceImpl implements ScrapService {
 
     @Override
     public Scrap findById(Long id) {
+
         Optional<Scrap> scrapOptional = scrapRepository.findById(id);
 
         return scrapOptional.orElse(null);
@@ -51,15 +52,13 @@ public class ScrapServiceImpl implements ScrapService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(Long scrapId, Long memberId) {
 
-        Optional<Scrap> scrapOptional = scrapRepository.findById(id);
-
-        if (scrapOptional.isPresent()) {
-            scrapRepository.deleteById(id);
+        if (findById(scrapId).getMember().getId() == memberId) {
+            scrapRepository.deleteById(scrapId);
 
         } else {
-            throw new RuntimeException("ID가 " + id + "인 스크랩을 찾을 수 없습니다.");
+            throw new RuntimeException("Error Occurred.");
         }
     }
 

@@ -3,10 +3,7 @@ package dev.service.newsscrap.controller;
 import dev.service.newsscrap.dto.ScrapRequest;
 import dev.service.newsscrap.service.ScrapService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/scrap")
 @RestController
@@ -19,5 +16,11 @@ public class ScrapRestController {
     public void addScrap(@RequestBody ScrapRequest scrapRequest) {
 
         scrapService.save(scrapRequest);
+    }
+
+    @PostMapping("/delete")
+    public void deleteScrap(@RequestParam Long scrapId, Long memberId) {
+
+        scrapService.deleteById(scrapId, memberId);
     }
 }

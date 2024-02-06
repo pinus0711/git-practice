@@ -12,5 +12,5 @@ public interface ScrapService {
 
     Scrap save(ScrapRequest scrapRequest);
 
-    void deleteById(Long id);
+    void deleteById(Long scrapId, Long memberId);
 }
