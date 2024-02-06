@@ -5,24 +5,23 @@ import dev.service.newsscrap.entity.News;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 @RestController
-@RequestMapping("/api/newsList")
+@RequestMapping("/newsList")
 @RequiredArgsConstructor
-public class NewApiController {
+public class NewsApiController {
     @Value("${SEARCH_API_BASE_URL}")
     private String baseUrl;
     @Value("${SEARCH_API_CLIENT_ID}")
