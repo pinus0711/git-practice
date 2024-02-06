@@ -53,4 +53,13 @@ public class Scrap {
         this.updatedTime = updatedTime;
         this.member = member;
     }
+
+    public void updateScrap(String url, String title, String content, String comment, String keyword, LocalDateTime updatedTime) {
+        this.url = url;
+        this.title = title;
+        this.content = content;
+        this.comment = comment;
+        this.keyword = keyword;
+        this.updatedTime = updatedTime;
+    }
 }
