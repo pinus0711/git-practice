@@ -3,7 +3,7 @@ package dev.service.newsscrap.service;
 import dev.service.newsscrap.dto.ScrapRequestDTO;
 import dev.service.newsscrap.entity.Member;
 import dev.service.newsscrap.entity.Scrap;
-import dev.service.newsscrap.repository.MemberRepositoy;
+import dev.service.newsscrap.repository.MemberRepository;
 import dev.service.newsscrap.repository.ScrapRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ import java.util.Optional;
 public class ScrapServiceImpl implements ScrapService {
 
     private final ScrapRepository scrapRepository;
-    private final MemberRepositoy memberRepository;
+    private final MemberRepository memberRepository;
 
     @Override
     public Scrap findById(Long id) {
