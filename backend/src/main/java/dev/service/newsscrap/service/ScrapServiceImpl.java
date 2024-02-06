@@ -37,8 +37,8 @@ public class ScrapServiceImpl implements ScrapService {
             Scrap scrap = ScrapRequest.toEntity(scrapRequest, member);
 
             return scrapRepository.save(scrap);
+
         } else {
-            
             throw new RuntimeException("ID가 " + scrapRequest.getMemberId() + "인 사용자를 찾을 수 없습니다.");
         }
     }
@@ -49,4 +49,18 @@ public class ScrapServiceImpl implements ScrapService {
 
         return scraps;
     }
+
+    @Override
+    public void deleteById(Long id) {
+
+        Optional<Scrap> scrapOptional = scrapRepository.findById(id);
+
+        if (scrapOptional.isPresent()) {
+            scrapRepository.deleteById(id);
+
+        } else {
+            throw new RuntimeException("ID가 " + id + "인 스크랩을 찾을 수 없습니다.");
+        }
+    }
+
 }

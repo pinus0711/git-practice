@@ -11,4 +11,6 @@ public interface ScrapService {
     List<Scrap> findAll();
 
     Scrap save(ScrapRequest scrapRequest);
+
+    void deleteById(Long id);
 }
