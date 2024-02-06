@@ -1,7 +1,9 @@
 package dev.service.newsscrap.service;
 
-import dev.service.newsscrap.dto.ScrapRequest;
+import dev.service.newsscrap.dto.ScrapRequestDTO;
+import dev.service.newsscrap.entity.Member;
 import dev.service.newsscrap.entity.Scrap;
+import dev.service.newsscrap.repository.MemberRepositoy;
 import dev.service.newsscrap.repository.ScrapRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import java.util.Optional;
 public class ScrapServiceImpl implements ScrapService {
 
     private final ScrapRepository scrapRepository;
+    private final MemberRepositoy memberRepository;
 
     @Override
     public Scrap findById(Long id) {
@@ -24,7 +27,10 @@ public class ScrapServiceImpl implements ScrapService {
     }
 
     @Override
-    public Scrap save(Scrap scrap) {
+    public Scrap save(ScrapRequestDTO scrapRequestDTO) {
+
+        Member member = memberRepository.findById(scrapRequestDTO.getMemberId()).get();
+        Scrap scrap = ScrapRequestDTO.toEntity(scrapRequestDTO, member);
 
         return scrapRepository.save(scrap);
     }

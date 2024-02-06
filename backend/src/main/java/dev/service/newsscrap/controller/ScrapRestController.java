@@ -1,7 +1,6 @@
 package dev.service.newsscrap.controller;
 
-import dev.service.newsscrap.dto.ScrapRequest;
-import dev.service.newsscrap.entity.Scrap;
+import dev.service.newsscrap.dto.ScrapRequestDTO;
 import dev.service.newsscrap.service.ScrapService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,16 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ScrapRestController {
 
-    // ScrapService 의존성 주입
     private final ScrapService scrapService;
 
     @PostMapping("/create")
-    public void addScrap(@RequestBody ScrapRequest scrapRequest) {
-        System.out.println("scrap = " + scrapRequest);
+    public void addScrap(@RequestBody ScrapRequestDTO scrapRequestDTO) {
 
-        scrapRequest.toEntity();
-
-        scrapService.save(scrapRequest.toEntity());
+        scrapService.save(scrapRequestDTO);
     }
 
 }
