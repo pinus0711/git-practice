@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -62,7 +63,8 @@ public class MemberController {
      * 로그아웃
      */
     @PostMapping("/logout")
-    public void Logout(HttpServletRequest request) {
+    public void Logout(HttpServletRequest request, @SessionAttribute("memberId") Long memberId) {
+        System.out.println(memberId);
 
         HttpSession session = request.getSession(false);
 
