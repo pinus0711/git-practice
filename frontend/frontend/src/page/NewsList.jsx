@@ -17,8 +17,15 @@ const NewsList = () => {
 	const [start, setStart] = useState(1);
 
 	useEffect(() => {
+
 		requestNewsList(query, start).then((res) => {
-			setList(res.news);
+			const sortedNewsList = res.news.sort((a, b) => {
+				const dateA = new Date(a.pubDate);
+				const dateB = new Date(b.pubDate);
+				return dateB - dateA;
+			});
+
+			setList(sortedNewsList);
 		});
 	}, [query, start]);
 
