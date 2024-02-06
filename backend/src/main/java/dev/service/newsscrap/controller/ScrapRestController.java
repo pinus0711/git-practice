@@ -7,9 +7,9 @@ import dev.service.newsscrap.entity.Scrap;
 import dev.service.newsscrap.exception.InvalidMemberException;
 import dev.service.newsscrap.service.ScrapService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/scrap")
 @RestController
@@ -41,4 +41,10 @@ public class ScrapRestController {
         }
     }
 
+
+    @PostMapping("/delete")
+    public void deleteScrap(@RequestParam Long scrapId, Long memberId) {
+
+        scrapService.deleteById(scrapId, memberId);
+    }
 }

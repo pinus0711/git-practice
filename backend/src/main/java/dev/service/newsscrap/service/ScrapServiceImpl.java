@@ -31,10 +31,18 @@ public class ScrapServiceImpl implements ScrapService {
     @Override
     public Scrap save(ScrapRequest scrapRequest) {
 
-        Member member = memberRepository.findById(scrapRequest.getMemberId()).get();
-        Scrap scrap = ScrapRequest.toEntity(scrapRequest, member);
+        Optional<Member> memberOptional = memberRepository.findById(scrapRequest.getMemberId());
 
-        return scrapRepository.save(scrap);
+        if (memberOptional.isPresent()) {
+            Member member = memberOptional.get();
+
+            Scrap scrap = ScrapRequest.toEntity(scrapRequest, member);
+
+            return scrapRepository.save(scrap);
+
+        } else {
+            throw new RuntimeException("ID가 " + scrapRequest.getMemberId() + "인 사용자를 찾을 수 없습니다.");
+        }
     }
 
     public List<Scrap> findAll() {
@@ -66,4 +74,16 @@ public class ScrapServiceImpl implements ScrapService {
 
         return exScrap;
     }
+
+    @Override
+    public void deleteById(Long scrapId, Long memberId) {
+
+        if (findById(scrapId).getMember().getId() == memberId) {
+            scrapRepository.deleteById(scrapId);
+
+        } else {
+            throw new RuntimeException("Error Occurred.");
+        }
+    }
+
 }
