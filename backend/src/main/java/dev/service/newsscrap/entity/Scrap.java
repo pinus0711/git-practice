@@ -1,6 +1,5 @@
 package dev.service.newsscrap.entity;
 
-import com.sun.istack.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
