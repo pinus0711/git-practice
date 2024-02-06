@@ -19,9 +19,9 @@ public class ScrapRestController {
     private final ScrapService scrapService;
 
     @PostMapping("/create")
-    public void addScrap(@RequestBody ScrapRequestDTO scrapRequestDTO) {
+    public void addScrap(@RequestBody ScrapRequest scrapRequest) {
 
-        scrapService.save(scrapRequestDTO);
+        scrapService.save(scrapRequest);
     }
 
     /**

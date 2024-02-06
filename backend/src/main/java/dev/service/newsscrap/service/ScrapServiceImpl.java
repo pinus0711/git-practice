@@ -1,6 +1,6 @@
 package dev.service.newsscrap.service;
 
-import dev.service.newsscrap.dto.ScrapRequestDTO;
+import dev.service.newsscrap.dto.ScrapRequest;
 import dev.service.newsscrap.entity.Member;
 import dev.service.newsscrap.entity.Scrap;
 import dev.service.newsscrap.exception.InvalidMemberException;
@@ -29,10 +29,10 @@ public class ScrapServiceImpl implements ScrapService {
     }
 
     @Override
-    public Scrap save(ScrapRequestDTO scrapRequestDTO) {
+    public Scrap save(ScrapRequest scrapRequest) {
 
-        Member member = memberRepository.findById(scrapRequestDTO.getMemberId()).get();
-        Scrap scrap = ScrapRequestDTO.toEntity(scrapRequestDTO, member);
+        Member member = memberRepository.findById(scrapRequest.getMemberId()).get();
+        Scrap scrap = ScrapRequest.toEntity(scrapRequest, member);
 
         return scrapRepository.save(scrap);
     }

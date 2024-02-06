@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @ToString
-public class ScrapRequestDTO {
+public class ScrapRequest {
 
     private String url;
     private String title;
@@ -20,7 +20,7 @@ public class ScrapRequestDTO {
 
     private Long memberId;
 
-    public ScrapRequestDTO(String url, String title, String content, String comment, String keyword, LocalDateTime createdTime, LocalDateTime updatedTime, Long memberId) {
+    public ScrapRequest(String url, String title, String content, String comment, String keyword, LocalDateTime createdTime, LocalDateTime updatedTime, Long memberId) {
         this.url = url;
         this.title = title;
         this.content = content;
@@ -32,15 +32,15 @@ public class ScrapRequestDTO {
         this.memberId = memberId;
     }
 
-    public static Scrap toEntity(ScrapRequestDTO scrapRequestDTO, Member member) {
+    public static Scrap toEntity(ScrapRequest scrapRequest, Member member) {
         return  Scrap.builder()
-                .comment(scrapRequestDTO.getComment())
-                .title(scrapRequestDTO.getTitle())
-                .content(scrapRequestDTO.getContent())
-                .url(scrapRequestDTO.getUrl())
-                .keyword(scrapRequestDTO.getKeyword())
-                .createdTime(scrapRequestDTO.getCreatedTime())
-                .updatedTime(scrapRequestDTO.getUpdatedTime())
+                .comment(scrapRequest.getComment())
+                .title(scrapRequest.getTitle())
+                .content(scrapRequest.getContent())
+                .url(scrapRequest.getUrl())
+                .keyword(scrapRequest.getKeyword())
+                .createdTime(scrapRequest.getCreatedTime())
+                .updatedTime(scrapRequest.getUpdatedTime())
                 .member(member)
                 .build();
     }
