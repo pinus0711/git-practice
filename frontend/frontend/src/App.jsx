@@ -1,6 +1,8 @@
 import "./index.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NewsList from "./page/NewsList";
+import Register from "./layout/Register";
+import Login from "./layout/Login";
 import { useEffect } from "react";
 import { requestDummyNews, saveNews } from "./api/newsApi";
 import ScrapForm from "./page/ScrapForm";
@@ -12,7 +14,6 @@ export const keywordList = {
   KB: "국민은행",
   HANA: "하나은행"
 };
-
 
 function App() {
   const start = 1;
@@ -41,6 +42,8 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<NewsList />} />
+        <Route path="/register" element={<Register/>} />
+        <Route path="/login" element={<Login />} />
         <Route path="/scrap/:newsId" element={<ScrapForm />} />
       </Routes>
     </Router>
