@@ -4,12 +4,16 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Scrap {
 
@@ -26,10 +30,12 @@ public class Scrap {
     @Column(nullable = false)
     private String keyword;
 
-    @Column(nullable = false)
+    @CreatedDate
+    @Column(updatable = false)
     private LocalDateTime createdTime;
 
     @Column(nullable = false)
+    @LastModifiedDate
     private LocalDateTime updatedTime;
 
     @ManyToOne

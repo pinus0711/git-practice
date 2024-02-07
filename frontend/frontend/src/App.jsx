@@ -28,13 +28,13 @@ function App() {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("setting") === null || localStorage.getItem("setting") === false) {
+    if (!sessionStorage.getItem("setting")) {
 
       Object.values(keywordList).forEach(keyword =>
         settingNewsData(keyword, start, display)
       );
 
-      localStorage.setItem("setting", true);
+      sessionStorage.setItem("setting", true);
     }
   }, []);
 
@@ -42,7 +42,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<NewsList />} />
-        <Route path="/register" element={<Register/>} />
+        <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/scrap/:newsId" element={<ScrapForm />} />
       </Routes>

@@ -7,7 +7,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class NewsRequest {
-    private Long id;
     private String title;
     private String originallink;
     private String link;

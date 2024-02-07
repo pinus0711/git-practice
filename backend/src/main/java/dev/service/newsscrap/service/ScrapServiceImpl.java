@@ -41,7 +41,7 @@ public class ScrapServiceImpl implements ScrapService {
             Member member = memberOptional.get();
             News news = newsOptional.get();
 
-            Scrap scrap = ScrapRequest.toEntity(scrapRequest, member, news);
+            Scrap scrap = scrapRequest.toEntity(member, news);
 
             return scrapRepository.save(scrap);
 
@@ -69,10 +69,10 @@ public class ScrapServiceImpl implements ScrapService {
 
         Scrap exScrap = findScrap.get();
         findScrap.get().updateScrap(
-                exScrap.getNews() != null ? updateScrap.getNews() : exScrap.getNews(),
-                exScrap.getComment() != null ? updateScrap.getComment() : exScrap.getComment(),
-                exScrap.getKeyword() != null ? updateScrap.getKeyword() : exScrap.getKeyword(),
-                exScrap.getUpdatedTime() != null ? updateScrap.getUpdatedTime() : exScrap.getUpdatedTime()
+                updateScrap.getNews() != null ? updateScrap.getNews() : exScrap.getNews(),
+                updateScrap.getComment() != null ? updateScrap.getComment() : exScrap.getComment(),
+                updateScrap.getKeyword() != null ? updateScrap.getKeyword() : exScrap.getKeyword(),
+                updateScrap.getUpdatedTime() != null ? updateScrap.getUpdatedTime() : exScrap.getUpdatedTime()
         );
 
         return exScrap;

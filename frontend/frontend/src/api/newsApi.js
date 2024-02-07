@@ -1,5 +1,4 @@
 export const requestDummyNews = async (query, start, display) => {
-	console.log("ghcnf");
 	const res = await fetch(`/api/dummy/newsList?query=${query}&start=${start}&display=${display}`,
 		{ credentials: 'include' }
 	);
@@ -12,11 +11,6 @@ export const requestNewsList = async (keyword, start) => {
 		{ credentials: 'include' }
 	);
 
-	if (res.status === 401) {
-		// localStorage.clear();
-		// window.location.href = "/login";
-	}
-
 	return await res.json();
 };
 
@@ -26,7 +20,7 @@ export const requestNewById = async (newsId) => {
 	);
 
 	if (res.status === 401) {
-		// localStorage.clear();
+		// sessionStorage.clear();
 		// window.location.href = "/login";
 	}
 
@@ -47,7 +41,7 @@ export const saveNews = async (news, keyword) => {
 	});
 
 	if (response.status === 401) {
-		// localStorage.clear();
+		// sessionStorage.clear();
 		// window.location.href = "/login";
 	}
 	return await response.json();
