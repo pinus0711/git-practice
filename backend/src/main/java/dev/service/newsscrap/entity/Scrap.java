@@ -17,14 +17,9 @@ public class Scrap {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String url;
-
-    @Column(nullable = false)
-    private String title;
-
-    @Column(nullable = false)
-    private String content;
+    @OneToOne
+    @JoinColumn(name = "news_id")
+    private News news;
 
     private String comment;
 
@@ -42,11 +37,9 @@ public class Scrap {
     private Member member;
 
     @Builder
-    public Scrap(Long id, String url, String title, String content, String comment, String keyword, LocalDateTime createdTime, LocalDateTime updatedTime, Member member) {
+    public Scrap(Long id, News news, String comment, String keyword, LocalDateTime createdTime, LocalDateTime updatedTime, Member member) {
         this.id = id;
-        this.url = url;
-        this.title = title;
-        this.content = content;
+        this.news = news;
         this.comment = comment;
         this.keyword = keyword;
         this.createdTime = createdTime;
@@ -54,10 +47,8 @@ public class Scrap {
         this.member = member;
     }
 
-    public void updateScrap(String url, String title, String content, String comment, String keyword, LocalDateTime updatedTime) {
-        this.url = url;
-        this.title = title;
-        this.content = content;
+    public void updateScrap(News news, String comment, String keyword, LocalDateTime updatedTime) {
+        this.news = news;
         this.comment = comment;
         this.keyword = keyword;
         this.updatedTime = updatedTime;

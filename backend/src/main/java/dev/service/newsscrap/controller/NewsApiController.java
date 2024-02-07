@@ -1,8 +1,10 @@
 package dev.service.newsscrap.controller;
 
-import dev.service.newsscrap.dto.NewsResponse;
+import dev.service.newsscrap.dto.NewsApiResponse;
 import dev.service.newsscrap.entity.News;
-import lombok.RequiredArgsConstructor;
+import dev.service.newsscrap.service.NewsService;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,9 +22,12 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 @RestController
-@RequestMapping("/newsList")
-@RequiredArgsConstructor
+@RequestMapping("/dummy/newsList")
+@AllArgsConstructor
+@NoArgsConstructor
 public class NewsApiController {
+    private NewsService newsService;
+
     @Value("${SEARCH_API_BASE_URL}")
     private String baseUrl;
     @Value("${SEARCH_API_CLIENT_ID}")
@@ -30,9 +36,9 @@ public class NewsApiController {
     private String clientKey;
 
     @GetMapping
-    public NewsResponse getList(@RequestParam(name = "query", required = true, defaultValue = "") String query,
-                                      @RequestParam(name = "start", required = false, defaultValue = "1") int start,
-                                      @RequestParam(name = "display", required = false, defaultValue = "30") int display) {
+    public NewsApiResponse getList(@RequestParam(name = "query", required = true, defaultValue = "") String query,
+                                   @RequestParam(name = "start", required = false, defaultValue = "1") int start,
+                                   @RequestParam(name = "display", required = false, defaultValue = "30") int display) {
 
         try {
             String apiUrl = new StringBuilder(baseUrl)
@@ -50,7 +56,8 @@ public class NewsApiController {
             conn.setRequestProperty("X-Naver-Client-Secret", clientKey);
             conn.setDoOutput(true);
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8));
+            InputStreamReader isr = new InputStreamReader(new BufferedInputStream(conn.getInputStream()), StandardCharsets.UTF_8);
+            BufferedReader br = new BufferedReader(isr);
             StringBuilder data = new StringBuilder();
             String line = null;
 
@@ -60,11 +67,11 @@ public class NewsApiController {
 
             JSONObject result = new JSONObject(data.toString());
 
-            return NewsResponse.builder()
+            return NewsApiResponse.builder()
                     .total(result.getInt("total"))
                     .start(result.getInt("start"))
                     .display(result.getInt("display"))
-                    .news(News.fromJsonArray(result.getJSONArray("items")))
+                    .news(News.fromJsonArray(result.getJSONArray("items"), query))
                     .build();
 
         } catch(IOException e) {
