@@ -7,10 +7,12 @@ import java.util.List;
 
 public interface ScrapService {
 
-    Scrap findById(Long scrapId);
+    Scrap findById(Long id);
     List<Scrap> findAll();
 
     Scrap save(ScrapRequest scrapRequest);
 
     Scrap update(Long id, Scrap scrap);
+
+    void deleteById(Long scrapId, Long memberId);
 }
