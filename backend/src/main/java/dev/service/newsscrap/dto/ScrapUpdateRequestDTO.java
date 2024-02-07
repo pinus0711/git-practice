@@ -1,11 +1,9 @@
 package dev.service.newsscrap.dto;
 
+import dev.service.newsscrap.entity.News;
 import dev.service.newsscrap.entity.Scrap;
-import dev.service.newsscrap.service.NewsService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @Getter
@@ -14,18 +12,13 @@ public class ScrapUpdateRequestDTO {
     private Long newsId;
     private String comment;
     private String keyword;
-    private LocalDateTime updatedTime;
-
-    private final NewsService newsService;
-
-    public Scrap toEntity() {
+    public Scrap toEntity(News news) {
 
         return Scrap.builder()
                 .id(id)
-                .news(newsService.findById(newsId))
+                .news(news)
                 .comment(comment)
                 .keyword(keyword)
-                .updatedTime(updatedTime)
                 .build();
     }
 }

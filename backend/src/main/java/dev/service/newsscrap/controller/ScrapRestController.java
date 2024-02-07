@@ -3,8 +3,10 @@ package dev.service.newsscrap.controller;
 import dev.service.newsscrap.dto.ScrapRequest;
 import dev.service.newsscrap.dto.ScrapUpdateRequestDTO;
 import dev.service.newsscrap.dto.ScrapUpdateResponseDTO;
+import dev.service.newsscrap.entity.News;
 import dev.service.newsscrap.entity.Scrap;
 import dev.service.newsscrap.exception.NotExistDataException;
+import dev.service.newsscrap.service.NewsService;
 import dev.service.newsscrap.service.ScrapService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class ScrapRestController {
 
     private final ScrapService scrapService;
+    private final NewsService newsService;
 
     @PostMapping("/create")
     public void addScrap(@RequestBody ScrapRequest scrapRequest) {
@@ -40,7 +43,8 @@ public class ScrapRestController {
      */
     @PatchMapping("/update/{id}")
     public ResponseEntity<?> updateScrap(@PathVariable Long id, @RequestBody ScrapUpdateRequestDTO scrapupdateRequestDTO) {
-        Scrap scrap = scrapupdateRequestDTO.toEntity();
+        News news = newsService.findById(scrapupdateRequestDTO.getNewsId());
+        Scrap scrap = scrapupdateRequestDTO.toEntity(news);
 
         try {
             Scrap updatedScrap = scrapService.update(id, scrap);
