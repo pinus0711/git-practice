@@ -1,9 +1,16 @@
 package dev.service.newsscrap.service;
 
+import dev.service.newsscrap.dto.ScrapRequest;
+import dev.service.newsscrap.entity.Member;
+import dev.service.newsscrap.entity.News;
 import dev.service.newsscrap.entity.Scrap;
+import dev.service.newsscrap.exception.InvalidMemberException;
+import dev.service.newsscrap.repository.MemberRepository;
+import dev.service.newsscrap.repository.NewsRepository;
 import dev.service.newsscrap.repository.ScrapRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +21,8 @@ import java.util.Optional;
 public class ScrapServiceImpl implements ScrapService {
 
     private final ScrapRepository scrapRepository;
+    private final MemberRepository memberRepository;
+    private final NewsRepository newsRepository;
 
     @Override
     public Scrap findById(Long id) {
@@ -23,8 +32,22 @@ public class ScrapServiceImpl implements ScrapService {
     }
 
     @Override
-    public Scrap save(Scrap scrap) {
-        return scrapRepository.save(scrap);
+    public Scrap save(ScrapRequest scrapRequest) {
+
+        Optional<Member> memberOptional = memberRepository.findById(scrapRequest.getMemberId());
+        Optional<News> newsOptional = newsRepository.findById(scrapRequest.getNewsId());
+
+        if (memberOptional.isPresent()) {
+            Member member = memberOptional.get();
+            News news = newsOptional.get();
+
+            Scrap scrap = ScrapRequest.toEntity(scrapRequest, member, news);
+
+            return scrapRepository.save(scrap);
+
+        } else {
+            throw new RuntimeException("ID가 " + scrapRequest.getMemberId() + "인 사용자를 찾을 수 없습니다.");
+        }
     }
 
     public List<Scrap> findAll() {
@@ -33,4 +56,37 @@ public class ScrapServiceImpl implements ScrapService {
 
         return scraps;
     }
+
+    @Transactional
+    @Override
+    public Scrap update(Long memberId, Scrap updateScrap) {
+        // 기존 scrap
+        Optional<Scrap> findScrap = scrapRepository.findById(updateScrap.getId());
+
+        if (findScrap.get().getMember().getId() != memberId) {
+            throw new InvalidMemberException("수정할 수 없는 회원입니다.");
+        }
+
+        Scrap exScrap = findScrap.get();
+        findScrap.get().updateScrap(
+                exScrap.getNews() != null ? updateScrap.getNews() : exScrap.getNews(),
+                exScrap.getComment() != null ? updateScrap.getComment() : exScrap.getComment(),
+                exScrap.getKeyword() != null ? updateScrap.getKeyword() : exScrap.getKeyword(),
+                exScrap.getUpdatedTime() != null ? updateScrap.getUpdatedTime() : exScrap.getUpdatedTime()
+        );
+
+        return exScrap;
+    }
+
+    @Override
+    public void deleteById(Long scrapId, Long memberId) {
+
+        if (findById(scrapId).getMember().getId() == memberId) {
+            scrapRepository.deleteById(scrapId);
+
+        } else {
+            throw new RuntimeException("Error Occurred.");
+        }
+    }
+
 }
