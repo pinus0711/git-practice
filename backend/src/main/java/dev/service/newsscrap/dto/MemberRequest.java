@@ -7,7 +7,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class MemberRequest {
-    private Long id;
     private String name;
     private String password;
 

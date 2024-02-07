@@ -2,9 +2,11 @@ package dev.service.newsscrap.service;
 
 import dev.service.newsscrap.dto.ScrapRequest;
 import dev.service.newsscrap.entity.Member;
+import dev.service.newsscrap.entity.News;
 import dev.service.newsscrap.entity.Scrap;
 import dev.service.newsscrap.exception.InvalidMemberException;
 import dev.service.newsscrap.repository.MemberRepository;
+import dev.service.newsscrap.repository.NewsRepository;
 import dev.service.newsscrap.repository.ScrapRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ public class ScrapServiceImpl implements ScrapService {
 
     private final ScrapRepository scrapRepository;
     private final MemberRepository memberRepository;
+    private final NewsRepository newsRepository;
 
     @Override
     public Scrap findById(Long id) {
@@ -32,11 +35,13 @@ public class ScrapServiceImpl implements ScrapService {
     public Scrap save(ScrapRequest scrapRequest) {
 
         Optional<Member> memberOptional = memberRepository.findById(scrapRequest.getMemberId());
+        Optional<News> newsOptional = newsRepository.findById(scrapRequest.getNewsId());
 
         if (memberOptional.isPresent()) {
             Member member = memberOptional.get();
+            News news = newsOptional.get();
 
-            Scrap scrap = ScrapRequest.toEntity(scrapRequest, member);
+            Scrap scrap = ScrapRequest.toEntity(scrapRequest, member, news);
 
             return scrapRepository.save(scrap);
 
@@ -64,9 +69,7 @@ public class ScrapServiceImpl implements ScrapService {
 
         Scrap exScrap = findScrap.get();
         findScrap.get().updateScrap(
-                exScrap.getUrl() != null ? updateScrap.getUrl() : exScrap.getUrl(),
-                exScrap.getTitle() != null ? updateScrap.getTitle() : exScrap.getTitle(),
-                exScrap.getContent() != null ? updateScrap.getContent() : exScrap.getContent(),
+                exScrap.getNews() != null ? updateScrap.getNews() : exScrap.getNews(),
                 exScrap.getComment() != null ? updateScrap.getComment() : exScrap.getComment(),
                 exScrap.getKeyword() != null ? updateScrap.getKeyword() : exScrap.getKeyword(),
                 exScrap.getUpdatedTime() != null ? updateScrap.getUpdatedTime() : exScrap.getUpdatedTime()
