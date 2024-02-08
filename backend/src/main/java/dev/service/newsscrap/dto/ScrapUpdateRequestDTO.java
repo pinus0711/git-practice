@@ -1,6 +1,6 @@
 package dev.service.newsscrap.dto;
 
-import dev.service.newsscrap.entity.News;
+import dev.service.newsscrap.entity.Member;
 import dev.service.newsscrap.entity.Scrap;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,17 +8,18 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class ScrapUpdateRequestDTO {
-    private Long id;
-    private Long newsId;
+    private Long memberId;
+    private String title;
+    private String content;
     private String comment;
-    private String keyword;
-    public Scrap toEntity(News news) {
+
+    public Scrap toEntity(Member member) {
 
         return Scrap.builder()
-                .id(id)
-                .news(news)
+                .member(member)
+                .title(title)
+                .content(content)
                 .comment(comment)
-                .keyword(keyword)
                 .build();
     }
 }

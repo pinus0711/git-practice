@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @Getter
-public class ScrapUpdateResponseDTO {
+public class ScrapResponse {
     private Long id;
     private News news;
     private String title;
@@ -19,7 +19,7 @@ public class ScrapUpdateResponseDTO {
     private LocalDateTime createdTime;
     private LocalDateTime updatedTime;
 
-    public static ScrapUpdateResponseDTO toDTO(Scrap scrap) {
+    public static ScrapResponse toDTO(Scrap scrap) {
         final Long id = scrap.getId();
         final News news = scrap.getNews();
         final String title = scrap.getTitle();
@@ -29,6 +29,6 @@ public class ScrapUpdateResponseDTO {
         final LocalDateTime createdTime = scrap.getCreatedTime();
         final LocalDateTime updatedTime = scrap.getUpdatedTime();
 
-        return new ScrapUpdateResponseDTO(id, news, title, content, comment, keyword, createdTime, updatedTime);
+        return new ScrapResponse(id, news, title, content, comment, keyword, createdTime, updatedTime);
     }
 }

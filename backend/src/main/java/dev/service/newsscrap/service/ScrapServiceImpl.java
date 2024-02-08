@@ -59,19 +59,19 @@ public class ScrapServiceImpl implements ScrapService {
 
     @Transactional
     @Override
-    public Scrap update(Long memberId, Scrap updateScrap) {
+    public Scrap update(Long id, Scrap updateScrap) {
         // 기존 scrap
-        Optional<Scrap> findScrap = scrapRepository.findById(updateScrap.getId());
+        Optional<Scrap> findScrap = scrapRepository.findById(id);
 
-        if (findScrap.get().getMember().getId() != memberId) {
+        if (findScrap.get().getMember().getId() != updateScrap.getMember().getId()) {
             throw new InvalidMemberException("수정할 수 없는 회원입니다.");
         }
 
         Scrap exScrap = findScrap.get();
         findScrap.get().updateScrap(
-                updateScrap.getNews() != null ? updateScrap.getNews() : exScrap.getNews(),
+                updateScrap.getTitle() != null ? updateScrap.getTitle() : exScrap.getTitle(),
+                updateScrap.getContent() != null ? updateScrap.getContent() : exScrap.getContent(),
                 updateScrap.getComment() != null ? updateScrap.getComment() : exScrap.getComment(),
-                updateScrap.getKeyword() != null ? updateScrap.getKeyword() : exScrap.getKeyword(),
                 updateScrap.getUpdatedTime() != null ? updateScrap.getUpdatedTime() : exScrap.getUpdatedTime()
         );
 

@@ -25,13 +25,16 @@ public class Scrap {
     @JoinColumn(name = "news_id")
     private News news;
 
-    private String comment;
+    @Column(nullable = false)
+    private String title;
 
     @Column(nullable = false)
-    private String keyword;
+    private String content;
+
+    private String comment;
 
     @CreatedDate
-    @Column(updatable = false)
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdTime;
 
     @Column(nullable = false)
@@ -43,20 +46,21 @@ public class Scrap {
     private Member member;
 
     @Builder
-    public Scrap(Long id, News news, String comment, String keyword, LocalDateTime createdTime, LocalDateTime updatedTime, Member member) {
+    public Scrap(Long id, News news, String title, String content, String comment, LocalDateTime createdTime, LocalDateTime updatedTime, Member member) {
         this.id = id;
         this.news = news;
+        this.title = title;
+        this.content = content;
         this.comment = comment;
-        this.keyword = keyword;
         this.createdTime = createdTime;
         this.updatedTime = updatedTime;
         this.member = member;
     }
 
-    public void updateScrap(News news, String comment, String keyword, LocalDateTime updatedTime) {
-        this.news = news;
+    public void updateScrap(String title, String content, String comment, LocalDateTime updatedTime) {
+        this.title = title;
+        this.content = content;
         this.comment = comment;
-        this.keyword = keyword;
         this.updatedTime = updatedTime;
     }
 }
