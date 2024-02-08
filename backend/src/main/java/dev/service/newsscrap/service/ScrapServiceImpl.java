@@ -1,5 +1,6 @@
 package dev.service.newsscrap.service;
 
+import dev.service.newsscrap.dto.CustomScrapResponseDTO;
 import dev.service.newsscrap.dto.ScrapRequest;
 import dev.service.newsscrap.entity.Member;
 import dev.service.newsscrap.entity.News;
@@ -9,6 +10,8 @@ import dev.service.newsscrap.repository.MemberRepository;
 import dev.service.newsscrap.repository.NewsRepository;
 import dev.service.newsscrap.repository.ScrapRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -89,4 +92,11 @@ public class ScrapServiceImpl implements ScrapService {
         }
     }
 
+    @Override
+    public Page<CustomScrapResponseDTO> findAllByMemberId(Long memberId, Pageable pageable) {
+
+        Page<Scrap> scraps = scrapRepository.findAllByMemberIdOrderByUpdatedTimeDesc(memberId, pageable);
+
+        return scraps.map(CustomScrapResponseDTO::from);
+    }
 }
