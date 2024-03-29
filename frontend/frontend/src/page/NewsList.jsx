@@ -28,7 +28,7 @@ const NewsList = () => {
 						Object.values(keywordList).map((keyword, idx) => {
 							return <div key={idx}
 								className={(keyword === selectedKeyword
-									? 'bg-[#bfdbfe]'
+									? 'bg-[#febfbf]'
 									: 'bg-[#e0f2fe] hover:bg-[#dbeafe] active:bg-[#bfdbfe] active:relative active:top-[1px]')
 									+ ` text-[#3b82f6] px-4 py-2 rounded-md shadow-sm cursor-pointer`}
 								onClick={() => { setQuery(keyword) }}
